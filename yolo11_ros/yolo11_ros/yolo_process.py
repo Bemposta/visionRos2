@@ -23,7 +23,7 @@ class YoloProcess_ROS(Node):
         self.get_logger().info(f"verbose: {self.verbose}")
 
         self.subscription = self.create_subscription(CompressedImage, '/camera/image/compressed', self.listener_callback, 1)
-        self.publisher_ = self.create_publisher(String, '/yolo/detctions', 1)
+        self.publisher_ = self.create_publisher(String, '/yolo/detections', 1)
         self.subscription  # evitar advertencia de variable no usada
         self.publisher_
 
