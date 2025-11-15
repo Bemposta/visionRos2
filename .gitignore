@@ -1,41 +1,50 @@
-# Prerequisites
-*.d
+# --- Archivos de Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.log
 
-# Compiled Object files
-*.slo
-*.lo
+# Entornos virtuales
+.venv/
+env/
+venv/
+ENV/
+*.env
+
+# Archivos de configuración locales
+*.sqlite3
+*.db
+*.DS_Store
+
+# --- Archivos de C++ ---
+# Objetos y binarios
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
 *.so
-*.dylib
 *.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
 *.exe
 *.out
 *.app
 
-# debug information files
-*.dwo
+# Archivos de depuración
+*.dSYM/
+*.stackdump
+
+# --- Herramientas comunes ---
+# Compiladores y build systems
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+build/
+Debug/
+Release/
+
+# --- General ---
+# Archivos de backup
+*~
+*.swp
