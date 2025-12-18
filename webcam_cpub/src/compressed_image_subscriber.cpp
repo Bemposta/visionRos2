@@ -9,7 +9,7 @@ public:
     CompressedImageSubscriber() : Node("compressed_image_subscriber"){
         subscription_ = this->create_subscription<sensor_msgs::msg::CompressedImage>(
             "/camera/image/compressed",
-            10,
+            rclcpp::SensorDataQoS(),
             std::bind(&CompressedImageSubscriber::callback, this, std::placeholders::_1));
     }
 

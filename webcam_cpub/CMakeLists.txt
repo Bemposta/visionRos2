@@ -10,12 +10,23 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(ament_index_cpp REQUIRED) 
 
 add_executable(publisher src/compressed_image_publisher.cpp)
-ament_target_dependencies(publisher rclcpp sensor_msgs OpenCV)
+ament_target_dependencies(publisher
+	rclcpp
+	sensor_msgs
+	ament_index_cpp
+	OpenCV
+)
 
 add_executable(subscriber src/compressed_image_subscriber.cpp)
-ament_target_dependencies(subscriber rclcpp sensor_msgs OpenCV)
+ament_target_dependencies(subscriber
+	rclcpp
+	sensor_msgs
+	ament_index_cpp
+	OpenCV
+)
 
 install(TARGETS
   publisher

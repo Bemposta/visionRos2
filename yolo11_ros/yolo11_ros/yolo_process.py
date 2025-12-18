@@ -7,6 +7,7 @@ import numpy as np
 from ultralytics import YOLO
 import json
 from rclpy.time import Time as RclpyTime
+from rclpy.qos import qos_profile_sensor_data
 
 class YoloProcess_ROS(Node):
     def __init__(self):
@@ -22,7 +23,7 @@ class YoloProcess_ROS(Node):
         self.get_logger().info(f"show frame: {self.show_frame}")
         self.get_logger().info(f"verbose: {self.verbose}")
 
-        self.subscription = self.create_subscription(CompressedImage, '/camera/image/compressed', self.listener_callback, 1)
+        self.subscription = self.create_subscription(CompressedImage, '/camera/image/compressed', self.listener_callback, qos_profile_sensor_data)
         self.publisher_ = self.create_publisher(String, '/yolo/detections', 1)
         self.subscription  # evitar advertencia de variable no usada
         self.publisher_
@@ -34,6 +35,11 @@ class YoloProcess_ROS(Node):
     def listener_callback(self, msg: CompressedImage):
         np_arr = np.frombuffer(msg.data, np.uint8)
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        delay = 0
+
+        if delay > 0.3:
+            self.get_logger().info(f"--> Frame tirado: delay {delay:.3f} segundos")
+            return
 
         # Diferencia en segundos
         if self.verbose:
@@ -41,7 +47,7 @@ class YoloProcess_ROS(Node):
             msg_time = RclpyTime.from_msg(stamp)
             now_time = self.get_clock().now()
             delay = (now_time - msg_time).nanoseconds / 1e9
-            self.get_logger().info(f"Mensaje publicado hace {delay:.3f} segundos")
+            self.get_logger().info(f"Frame publicado hace {delay:.3f} segundos")
 
         if frame is None:
             self.get_logger().warn("Imagen vacía o corrupta.")

@@ -9,8 +9,8 @@ camera_publisher = Node(
     parameters=[
         {"camera_id": -1},               #Si camera_id es <0, entonces usa el video como fuente de imagenes.
         {"topic": "/camera/image"},     #El topic del video comprimido es topic+"/compressed"
-        {"fps": 2.0},                   #Tiene que ser un double. No puede ser integer.
-        {"video": "/home/mixi/ros2_ws/Tokyo_640.mp4"}
+        {"fps": 5.0},                   #Tiene que ser un double. No puede ser integer.
+        {"video": "/home/mixi/ros2_ws/src/visionRos2/Tokyo_640.mp4"}
     ]
 )
 
