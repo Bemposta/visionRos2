@@ -7,7 +7,7 @@ camera_publisher = Node(
     name='camera_publisher',
     output='screen',
     parameters=[
-        {"camera_id": -1},               #Si camera_id es <0, entonces usa el video como fuente de imagenes.
+        {"camera_id": 0},               #Si camera_id es <0, entonces usa el video como fuente de imagenes.
         {"topic": "/camera/image"},     #El topic del video comprimido es topic+"/compressed"
         {"fps": 5.0},                   #Tiene que ser un double. No puede ser integer.
         {"video": "/home/mixi/ros2_ws/src/visionRos2/Tokyo_640.mp4"}
@@ -36,7 +36,7 @@ camera_viewer = Node(
 
 def generate_launch_description():
     launchDescription = LaunchDescription([
-        camera_publisher,
+        #camera_publisher,
         yolo_detector,
         camera_viewer
     ])

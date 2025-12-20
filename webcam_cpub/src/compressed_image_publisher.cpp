@@ -26,16 +26,36 @@ public:
 		if(camera_id_ < 0)
 			 RCLCPP_INFO(get_logger(), "video: %s", video_demo_.c_str());
 	      
-		auto qos = rclcpp::QoS(1).best_effort();
         publisher_compress = create_publisher<sensor_msgs::msg::CompressedImage>(topic_+"/compressed", rclcpp::SensorDataQoS());
-		publisher_raw = create_publisher<sensor_msgs::msg::Image>(topic_, qos);
+		publisher_raw = create_publisher<sensor_msgs::msg::Image>(topic_, rclcpp::SensorDataQoS());
 
         timer_ = create_wall_timer(
 		std::chrono::milliseconds(timer_delay_),
 		std::bind(&CompressedImagePublisher::timer_callback, this));
 
-		if(camera_id_ >= 0)
-			cap_.open(camera_id_);  // Abrir webcam por defecto
+		if(camera_id_ >= 0){
+		    /*
+			std::vector<int> backends = {cv::CAP_FFMPEG, cv::CAP_GSTREAMER, cv::CAP_V4L2, cv::CAP_ANY};
+			for (int backend : backends) {
+				cap_.open(0, backend);
+				if (cap_.isOpened()) {
+					RCLCPP_INFO(this->get_logger(), "*** Abierto con backend: %d", backend);
+					cap_.release();
+				}
+				else
+				    RCLCPP_INFO(this->get_logger(), "*** NO Abierto con backend: %d", backend);
+			}
+			return;
+			*/
+			cap_.open(camera_id_, cv::CAP_V4L2);  // Abrir webcam por defecto
+		    // IMPORTANTE: Reducir el buffer de la cámara
+		    /*
+			cap_.set(cv::CAP_PROP_BUFFERSIZE, 1);
+			// Opcional: Configurar resolución más baja
+			cap_.set(cv::CAP_PROP_FRAME_WIDTH, 640);
+			cap_.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+			*/
+		}
 		else{
 			cap_.open(video_demo_);  // Abrir webcam por defecto
 			RCLCPP_ERROR(get_logger(), (std::string("video: ")+video_demo_).c_str());
@@ -45,8 +65,8 @@ public:
 			  RCLCPP_ERROR(get_logger(), "No se pudo abrir la webcam");
 			else
 			  RCLCPP_ERROR(get_logger(), "No se pudo abrir video: ");
-        }
-    }
+		}
+	}
 
 private:
 
@@ -55,12 +75,9 @@ private:
         cap_ >> frame;
         if (frame.empty())
             return;
-            
-        // IMPORTANTE: Reducir el buffer de la cámara
-        cap_.set(cv::CAP_PROP_BUFFERSIZE, 1);
-        // Opcional: Configurar resolución más baja
-        cap_.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-        cap_.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+
+        cv::imshow("RAW image", frame);
+        cv::waitKey(5);
 
 	//Envio de imagen comprimida....
         std::vector<uchar> buf;
