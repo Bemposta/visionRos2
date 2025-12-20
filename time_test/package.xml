@@ -3,12 +3,14 @@
 <package format="3">
   <name>time_test</name>
   <version>0.0.0</version>
-  <description>Test de tiempo de transmision.</description>
-  <maintainer email="sergio.bemposta@gmail.com">bemposta</maintainer>
-  <license>TODO: License declaration</license>
+  <description>TODO: Package description</description>
+  <maintainer email="sergio.bemposta@gmail.com">mixi</maintainer>
+  <license>Apache-2.0</license>
 
-  <exec_depend>rclpy</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
 
   <export>
     <build_type>ament_python</build_type>

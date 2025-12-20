@@ -15,11 +15,15 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='zenhost',
-    maintainer_email='peterkorolev95@gmail.com',
+    maintainer='mixi',
+    maintainer_email='sergio.bemposta@gmail.com',
     description='TODO: Package description',
-    license='TODO: License declaration',
-    tests_require=['pytest'],
+    license='Apache-2.0',
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
             'console_scripts': [
                 'talker = time_test.publisher:main',
