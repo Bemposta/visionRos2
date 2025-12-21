@@ -19,15 +19,10 @@ setup(
     maintainer_email='sergio.bemposta@gmail.com',
     description='TODO: Package description',
     license='Apache-2.0',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
     entry_points={
             'console_scripts': [
-                'talker = time_test.publisher:main',
-                'listener = time_test.subscriber:main',
+                'clock = time_test.clock:main',
+                'echo = time_test.echo:main',
             ],
     },
 )

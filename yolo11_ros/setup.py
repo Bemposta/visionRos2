@@ -20,11 +20,6 @@ setup(
     maintainer_email='mixi@todo.todo',
     description='TODO: Package description',
     license='Apache-2.0',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
     entry_points={
         'console_scripts': [
             'yolo_process = yolo11_ros.yolo_process:main'

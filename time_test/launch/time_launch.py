@@ -1,21 +1,21 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
-time_publisher = Node(
+time_clock = Node(
     package='time_test',
-    executable='talker',
-    name='talker'
+    executable='clock',
+    name='clock'
 )
 
-time_listener = Node(
+time_echo = Node(
     package='time_test',
-    executable='listener',
-    name='listener'
+    executable='echo',
+    name='echo'
 )
 
 def generate_launch_description():
     launchDescription = LaunchDescription([
-        time_publisher,
-        time_listener
+        time_clock,
+        time_echo,
     ])
     return launchDescription
