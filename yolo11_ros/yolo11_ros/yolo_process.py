@@ -9,7 +9,10 @@ import json
 from rclpy.time import Time as RclpyTime
 from rclpy.qos import qos_profile_sensor_data
 
+#********************************************************************************************
 class YoloProcess_ROS(Node):
+
+    #----------------------------------------------------------------------------------------
     def __init__(self):
         super().__init__('yolo_process_ros')
         
@@ -32,6 +35,7 @@ class YoloProcess_ROS(Node):
         self.model = YOLO('yolo11n.pt')
         self.get_logger().info('Modelo cargado correctamente')
 
+    # ----------------------------------------------------------------------------------------
     def listener_callback(self, msg: CompressedImage):
         np_arr = np.frombuffer(msg.data, np.uint8)
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
@@ -65,6 +69,7 @@ class YoloProcess_ROS(Node):
             cv2.imshow("YOLOv11 detections", annotated_frame)
             cv2.waitKey(1)
 
+    # ----------------------------------------------------------------------------------------
     def yolo_results_to_json(self, results, sizeIm):
         detections = []
         for box in results.boxes:
@@ -76,6 +81,7 @@ class YoloProcess_ROS(Node):
             detections.append(detection)
         return json.dumps({"imgsz": sizeIm, "detections": detections}, skipkeys=True)
 
+#********************************************************************************************
 def main(args=None):
     rclpy.init(args=args)
     node = YoloProcess_ROS()
@@ -87,5 +93,6 @@ def main(args=None):
     rclpy.shutdown()
     cv2.destroyAllWindows()
 
+#********************************************************************************************
 if __name__ == '__main__':
     main()
